@@ -22,9 +22,12 @@ class User extends Model
         $documents = $this->firestore->database()->collection('users')->documents();
         $firebaseUsers = [];
 
+        
+
         foreach ($documents as $document) {
             if ($document->exists()) {
                 $firebaseUsers[] = $document->data();
+                echo "<script>console.log(" . json_encode($document->data()) . ");</script>";
             }
         }
         return $firebaseUsers;
@@ -38,8 +41,10 @@ class User extends Model
         foreach ($documents as $document) {
             if ($document->exists()) {
                 $userData = $document->data();
+
+                echo "<script>console.log(" . json_encode($document->data()) . ");</script>";
     
-                if (isset($userData['status']) && $userData['role'] == 2 && $userData['status'] == "pending") {
+                if (isset($userData['verificationStatus']) && $userData['role'] == 2 && ($userData['verificationStatus'] == "PENDING" || $userData['verificationStatus'] == "pending")) {
                     $firebaseUsers[] = $userData;
                 }
             }
@@ -82,19 +87,19 @@ class User extends Model
         
         // Update the user's status in Firestore
         $userRef->update([
-            ['path' => 'status', 'value' => $status],
+            ['path' => 'verificationStatus', 'value' => $status],
         ]);
     }
 
     public function acceptUser($userId)
     {
-        $this->updateUserStatus($userId, 'approved');
+        $this->updateUserStatus($userId, 'successful');
     }
 
     public function rejectUser($userId)
     {
 
-        $this->updateUserStatus($userId, 'rejected');
+        $this->updateUserStatus($userId, 'denied');
     }
 
     public function deleteUser($userId)
