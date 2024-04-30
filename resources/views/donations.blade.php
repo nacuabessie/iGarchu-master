@@ -34,10 +34,10 @@
                                 <td class="py-2 px-4 border-b text-center">{{ $item['gatheredAmount'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $item['targetAmount'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ \Carbon\Carbon::parse($item['dateStarted'])->format('F j, Y') }}</td>
-                                <td class="py-2 px-4 border-b text-center">{{ \Carbon\Carbon::parse($item['dateEnded'])->format('F j, Y') }}</td>
-                                <td class="py-2 px-4 border-b text-center">{{ $item['isActive'] == "true" ? 'Yes' : 'No' }}</td>
+                                <td class="py-2 px-4 border-b text-center">{{ \Carbon\Carbon::parse($item['endDate'])->format('F j, Y') }}</td>
+                                <td class="py-2 px-4 border-b text-center">{{ $item['active'] == "true" ? 'Yes' : 'No' }}</td>
                                 <td class="py-2 px-4 border-b text-center">
-                                    @if ($item['gatheredAmount'] >= $item['targetAmount'] && $item['isActive'] == "true")
+                                    @if ($item['gatheredAmount'] >= $item['targetAmount'] && $item['active'] == "true")
                                         <form method="POST" action="{{ url('/api/donations/close/' . $item['id']) }}">
                                             @csrf
                                             {{ method_field("PUT") }}

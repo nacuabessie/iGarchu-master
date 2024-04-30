@@ -53,12 +53,12 @@
             <img src="" alt="" id="verificationImage">
             
             <div>
-                <form style="float:left"  method="POST" action="{{ url('/api/users/' . $user['id'] . '/accept') }}">
+            <form id="acceptForm" style="float:left"  method="POST" action="{{ url('/api/users/') }}/accept">
                     @csrf
                     {{method_field("PUT")}}
                     <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded-md sm:mb-2">Accept</button>
                 </form>
-                <form style="float:right" method="POST" action="{{ url('/api/users/' . $user['id'] . '/reject') }}">
+                <form id="rejectForm" style="float:left"  method="POST" action="{{ url('/api/users/') }}/reject">
                     @csrf
                     {{method_field("PUT")}}
                     <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded-md sm:mb-2">Reject</button>
@@ -88,6 +88,8 @@ $(document).on('click', '#mediumButton', function(event) {
         // return the result
         success: function(result) {
             $('#verificationImage').attr('src', result.image);
+            $('#acceptForm').attr('action', '/api/users/' + userId + '/accept');
+            $('#rejectForm').attr('action', '/api/users/' + userId + '/reject');
             $('#mediumModal').modal("show");
         },
         complete: function() {
