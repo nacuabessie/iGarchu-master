@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,3 +49,5 @@ Route::get('/api/donations/{id}', [DonationController::class, 'getDonationById']
 Route::post('/api/donations', [DonationController::class, 'create']);
 Route::put('/api/donations/{id}', [DonationController::class, 'updateDonation']);
 Route::delete('/api/donations/{id}', [DonationController::class, 'deleteDonation']);
+
+Route::get('/api/users/verification/{id}', [VerificationController::class, 'getVerificationById']);

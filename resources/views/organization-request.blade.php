@@ -50,7 +50,7 @@
         </div>
         <div class="modal-body" id="mediumBody">
              <!-- INSERT IMAGE HERE -->
-            Your modal content goes here...
+            <img src="" alt="" id="verificationImage">
             
             <div>
                 <form style="float:left"  method="POST" action="{{ url('/api/users/' . $user['id'] . '/accept') }}">
@@ -82,8 +82,12 @@ $(document).on('click', '#mediumButton', function(event) {
         beforeSend: function() {
             $('#loader').show();
         },
+        url: 'api/users/verification/' + userId,
+        method: 'GET',
+        dataType: 'json',
         // return the result
         success: function(result) {
+            $('#verificationImage').attr('src', result.image);
             $('#mediumModal').modal("show");
         },
         complete: function() {

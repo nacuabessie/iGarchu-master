@@ -28,7 +28,7 @@
                     </thead>
                     <tbody class="text-gray-700" id="donationsTableBody">
                         @foreach($donations as $item)
-                            <tr class="donation-row {{ $item['isActive'] == "true" ? 'active' : 'inactive' }}">
+                            <tr class="donation-row {{ $item['active'] == "true" ? 'active' : 'inactive' }}">
                                 <td class="py-2 px-4 border-b">{{ $item['caption'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $item['description'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $item['gatheredAmount'] }}</td>
