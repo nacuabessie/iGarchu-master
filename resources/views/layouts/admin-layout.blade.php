@@ -9,9 +9,10 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
     @vite('resources/css/app.css')
+
 </head>
 
-<body class="lg:gap-4 lg:flex h-screen ">
+<body class="lg:gap-4 lg:flex h-screen custom-height" style="height: 800px !important;">
 
    
 
@@ -24,7 +25,7 @@
 
 
 
-    <div class="lg:h-full lg:overflow-hidden z-10">
+    <div class="lg:h-full lg:overflow-hidden z-10 bg-gray-800">
         {{-- When in small screen --}}
         <button id="sidebarToggle" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-300 rounded-lg lg:hidden  focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
             <span class="sr-only">Open sidebar</span>
@@ -34,7 +35,7 @@
         </button>
     
         <div id="default-sidebar" class="lg:hidden fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full lg:translate-x-0" aria-label="Sidebar">
-            <div class="flex justify-between items-center p-4 bg-gray-800">
+            <div class="flex justify-between items-center p-4 bg-gray-00">
                 <h1 class="text-[#80461B] text-2xl font-bold">iGarchu</h1>
                 <button id="sidebarClose" class="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -86,14 +87,17 @@
          {{-- Higher Screen --}}
          <aside id="default-sidebar" class="lg:block hidden z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
             <div class="flex justify-between items-center p-4 bg-gray-800">
-                <h1 class="text-[#80461B] text-2xl font-bold">iGarchu</h1>
+                <!-- <h1 class="text-[#80461B] text-2xl font-bold">iGarchu</h1> -->
+                <div class="flex justify-center flex-col items-center">
+          <img src="{{ asset('image/igarchuLogo.png') }}" alt="Example Image" style="width: 230px; height: 200px;">
+        </div>
                 <button id="sidebarClose" class="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
-            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-800 dark:bg-gray-800">
                <ul class="space-y-2 font-medium">
                 <li>
                     <a href="{{ route('users') }}" class="@if(Route::currentRouteName() == 'users') bg-[#613b16]  @endif flex items-center p-2 text-white rounded-lg   dark:hover:bg-gray-700 group">
@@ -138,24 +142,23 @@
     </main>
 
     <script>
+         function logout() {
+            window.location.href="/api/logout"
+         }
 
+               document.getElementById('sidebarToggle').addEventListener('click', function () {
+                     toggleSidebar();
+               });
 
-function logout() {
-   window.location.href="/api/logout"
-}
+               document.getElementById('sidebarClose').addEventListener('click', function () {
+                     toggleSidebar();
+               });
 
-        document.getElementById('sidebarToggle').addEventListener('click', function () {
-            toggleSidebar();
-        });
-
-        document.getElementById('sidebarClose').addEventListener('click', function () {
-            toggleSidebar();
-        });
-
-        function toggleSidebar() {
-            var sidebar = document.getElementById('default-sidebar');
-            sidebar.style.transform = sidebar.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)';
-        }
+               function toggleSidebar() {
+                     var sidebar = document.getElementById('default-sidebar');
+                     sidebar.style.transform = sidebar.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)';
+               }
+         
     </script>
 </body>
 </html>

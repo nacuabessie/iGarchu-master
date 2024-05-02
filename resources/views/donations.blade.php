@@ -4,7 +4,7 @@
     <div class="container mx-auto w-full pr-4">
         <div class="mb-4">
             <div class="flex items-center justify-between">
-                <h2>Donations</h2>
+            <h1 class="font-bold text-2xl">Donations</h1>
                 <div>
                     <label for="isActiveFilter" class="text-sm text-gray-500">Filter by IsActive:</label>
                     <select id="isActiveFilter" name="isActiveFilter" class="ml-2 border p-1 rounded-md" onchange="filterTable()">
@@ -18,7 +18,7 @@
 
         @if(isset($donations) && count($donations) > 0)
             <div class="overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="min-w-full bg-white border border-brown-500 rounded-lg overflow-hidden table-auto">
+                <table class="min-w-full bg-gray-300 border border-brown-500 rounded-lg overflow-hidden table-auto">
                     <thead class="bg-brown-300 text-brown-700">
                         <tr>
                             @foreach(['Caption', 'Description', 'Gathered Amount', 'Target Amount', 'Date Started','Date Ended',  'Is Active'] as $header)

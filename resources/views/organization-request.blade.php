@@ -4,7 +4,7 @@
     <div class="container w-full mx-auto shadow-md sm:rounded-lg">
         @if(isset($users) && count($users) > 0)
             <div class="overflow-x-auto">
-                <table class="w-full bg-white border border-brown-500 rounded-lg overflow-hidden">
+                <table class="w-full bg-gray-300 border border-brown-500 rounded-lg overflow-hidden">
                     <thead class="bg-brown-300 text-brown-700">
                         <tr>
                             @foreach(['Organization Name', 'Description', 'Email',  'Action'] as $header)
@@ -34,7 +34,8 @@
                 </table>
             </div>
         @else
-            <p class="p-4">No organization request found.</p>
+            <h1 class="font-bold text-2xl">User Requests</h1>
+            <p class="m-3 p-4 bg-gray-300">No organization request found.</p>
         @endif
     </div>
 @endsection
