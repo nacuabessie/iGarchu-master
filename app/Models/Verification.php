@@ -10,7 +10,7 @@ class Verification extends Model
 {
     protected $firestore;
 
-    protected $fillable = ['id', 'image', 'orgId'];
+    protected $fillable = ['id', 'image', 'orgId', 'dateCreated'];
 
     public function __construct(Firestore $firestore)
     {
@@ -23,6 +23,21 @@ class Verification extends Model
         $userDocuments = [];
 
         foreach ($userRef as $document) {
+            if ($document -> exists()) {
+                $userDocuments[] = $document->data();
+            }
+        }
+
+        return count($userDocuments) > 0 ? $userDocuments[0] : null;
+    }
+
+    public function getAcceptedByUserId($userId)
+    {
+        $userRef = $this->firestore->database()->collection('verification')->where('orgId', '=', $userId)->limit(1)->documents();
+        $userDocuments = [];
+
+        foreach ($userRef as $document) {
+            error_log(json_encode($document));
             if ($document -> exists()) {
                 $userDocuments[] = $document->data();
             }

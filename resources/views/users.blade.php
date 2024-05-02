@@ -36,14 +36,18 @@
                                 <h5 class="text-sm tracking-tight max-w-fit  border py-1 px-2 rounded
                                     @if($user['role'] == 2) text-green-600 border-green-600 @else text-gray-400 border-gray-500 @endif
                                 ">
-                                    @if($user['role'] == 2)Organization @else Adopter @endif
+                                    @if($user['role'] == 2 && ($user['verificationStatus'] == 'successful' || $user['verificationStatus'] == 'SUCCESSFUL'))Organization @elseif($user['verificationStatus'] == 'PENDING')Applicant @else Adopter @endif
                                 </h5>
                             </div>
                         </div>
                         <div class="mt-4 text-gray-400">
                             <p class="truncate">{{ $user['description'] }}</p>
                         </div>
-                    
+                        @if($user['role'] == 2 && ($user['verificationStatus'] == 'SUCCESSFUL' || $user['verificationStatus'] == 'successful'))
+                            <button class="bg-green-500 text-white px-2 py-1 rounded-md sm:mb-2" data-toggle="modal" id="verificationButton" data-target="#mediumModal" data-attr="{{$user['id']}}" title="Show">
+                                Show
+                            </button>
+                        @endif
                 </div>
             </div>
         @endforeach
@@ -64,5 +68,54 @@
             }
         });
     });
+    
+    $(document).on('click', '#verificationButton', function(event) {
+        event.preventDefault();
+        let userId = $(this).attr('data-attr');
+        $.ajax({
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            url: 'api/users/verification/accepted/' + userId,
+            method: 'GET',
+            dataType: 'json',
+            // return the result
+            success: function(result) {
+                $('#verificationImage').attr('src', result.image);
+            },
+            complete: function() {
+                $('#loader').hide();
+            },
+            error: function(jqXHR, testStatus, error) {
+                console.log(error);
+                alert("Page " + href + " cannot open. Error:" + error);
+                $('#loader').hide();
+            },
+            timeout: 8000
+        })
+    });
 </script>
 @endsection
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- Script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' type='text/javascript'></script>
+
+<div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document"  style="margin-top: 15%;">
+    <div class="modal-content">
+        <div class="modal-header">
+            ACCEPTED VERIFICATION
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" id="mediumBody">
+             <!-- INSERT IMAGE HERE -->
+            <img src="" alt="" id="verificationImage">
+        </div>
+    </div>
+</div>
+</div>

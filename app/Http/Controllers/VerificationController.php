@@ -28,4 +28,17 @@ class VerificationController extends Controller
         return response()->json($verification);
     }
 
+    
+    public function getAcceptedById($userId)
+    {
+        $verification = $this->verificationModel->getAcceptedByUserId($userId);
+        error_log(json_encode($verification));
+
+        if (!$verification) {
+            return response()->json(['message' => 'Verification not found'], 404);
+        }
+
+        return response()->json($verification);
+    }
+
 }

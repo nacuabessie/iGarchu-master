@@ -51,3 +51,4 @@ Route::put('/api/donations/{id}', [DonationController::class, 'updateDonation'])
 Route::delete('/api/donations/{id}', [DonationController::class, 'deleteDonation']);
 
 Route::get('/api/users/verification/{id}', [VerificationController::class, 'getVerificationById']);
+Route::get('/api/users/verification/accepted/{id}', [VerificationController::class, 'getAcceptedById']);
