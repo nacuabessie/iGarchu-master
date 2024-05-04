@@ -16,25 +16,32 @@
 
  
 
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 "  id="userGrid">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 "  id="userGrid">
         @foreach($users as $user)
-            <div class="h-[30vh] border rounded-lg bg-gray-800 border-gray-700 shadow-md sm:rounded-lg" data-role="{{ $user['role'] }}">
-                <img class="rounded-t-lg h-4/6 object-fill w-full" src={{$user['cover']}} alt="cover" />
-                <div class="px-4 py-2 "> 
-                    
-                    
+            <div class="h-[55vh] border rounded-lg bg-[#ECA766] border-gray-700 shadow-md sm:rounded-lg" data-role="{{ $user['role'] }}">
+                @if($user['role'] == 2 && ($user['verificationStatus'] == 'SUCCESSFUL' || $user['verificationStatus'] == 'successful'))
+                    <button class=" absolute mt-3 ml-2 bg-[#D63930] text-white px-2 py-1 rounded-md sm:mb-2" data-toggle="modal" id="verificationButton" data-target="#mediumModal" data-attr="{{$user['id']}}" title="Show">
+                        Show
+                    </button>
+                @endif
+                <img class="rounded-t-lg h-3/6 object-fill w-full" src={{$user['cover']}} alt="cover" />
+                <div class="px-4 py-2 ">                                         
                     {{-- Role 2 (Organization) --}}
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-3">
                                 <img class="rounded-full w-12 h-12" src={{$user['profile']}} alt="organization">
                                 <div>
-                                    <h5 class="text-lg font-semibold tracking-tight text-white dark:text-white">@if($user['role'] == 2){{ $user['orgName'] }} @else {{ $user['firstName'] }} {{ $user['lastName'] }}@endif</h5>
-                                    <h5 class="text-sm text-gray-400 tracking-tight">{{ $user['email'] }}</h5>
+                                    <h5 class="mt-2 text-lg font-bold tracking-tight text-amber-950">@if($user['role'] == 2){{ $user['orgName'] }} @else {{ $user['firstName'] }} {{ $user['lastName'] }}@endif</h5>
+                                    <h5 class=" mt-2 mb-1 font-bold text-sm text-amber-950 tracking-tight">INFORMATION</h4>
+                                    <h5 class="text-sm text-amber-900 tracking-tight">{{ $user['email'] }}</h5>
+                                    <h5 class="text-sm text-amber-900 tracking-tight">{{ $user['contactNo'] }}</h5>
+                                    <h5 class="text-sm text-amber-900 tracking-tight">{{ $user['locationDetails']['address'] }}</h5>
+                                    
                                 </div>
                             </div>
                             <div class="">
                                 <h5 class="text-sm tracking-tight max-w-fit  border py-1 px-2 rounded
-                                    @if($user['role'] == 2) text-green-600 border-green-600 @else text-gray-400 border-gray-500 @endif
+                                    @if($user['role'] == 2) font-medium text-white bg-[#5A352C] @else font-bold text-[#5A352C] bg-[#FEE9D6] @endif
                                 ">
                                     @if($user['role'] == 2 && ($user['verificationStatus'] == 'successful' || $user['verificationStatus'] == 'SUCCESSFUL'))Organization @elseif($user['verificationStatus'] == 'PENDING')Applicant @else Adopter @endif
                                 </h5>
@@ -43,12 +50,6 @@
                         <!-- <div class="mt-4 text-gray-400">
                             <p class="truncate">{{ $user['description'] }}</p>
                         </div>  -->
-                        
-                        @if($user['role'] == 2 && ($user['verificationStatus'] == 'SUCCESSFUL' || $user['verificationStatus'] == 'successful'))
-                            <button class="bg-green-500 text-white px-2 py-1 rounded-md sm:mb-2" data-toggle="modal" id="verificationButton" data-target="#mediumModal" data-attr="{{$user['id']}}" title="Show">
-                                Show
-                            </button>
-                        @endif
                 </div>
             </div>
         @endforeach
