@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdoptionArchiveController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,3 +53,5 @@ Route::delete('/api/donations/{id}', [DonationController::class, 'deleteDonation
 
 Route::get('/api/users/verification/{id}', [VerificationController::class, 'getVerificationById']);
 Route::get('/api/users/verification/accepted/{id}', [VerificationController::class, 'getAcceptedById']);
+
+Route::get('/adoptions/archive', [AdoptionArchiveController::class, 'getAll'])->name("archive");
