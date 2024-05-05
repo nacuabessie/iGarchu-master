@@ -18,10 +18,10 @@
 
         @if(isset($donations) && count($donations) > 0)
             <div class="overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="min-w-full bg-gray-300 border border-brown-500 rounded-lg overflow-hidden table-auto">
+                <table class="min-w-full bg-orange-200 border border-brown-500 rounded-lg overflow-hidden table-auto">
                     <thead class="bg-brown-300 text-brown-700">
                         <tr>
-                            @foreach(['Caption', 'Description', 'Gathered Amount', 'Target Amount', 'Date Started','Date Ended',  'Is Active'] as $header)
+                            @foreach(['Organization Name', 'Description', 'Gathered Amount', 'Target Amount', 'Date Started','Date Ended',  'Is Active'] as $header)
                                 <th class="py-2 border-b cursor-pointer" data-key="{{ $header }}" onclick="sortTable('{{ $header }}')">{{ $header }}</th>
                             @endforeach
                         </tr>
@@ -29,7 +29,7 @@
                     <tbody class="text-gray-700" id="donationsTableBody">
                         @foreach($donations as $item)
                             <tr class="donation-row {{ $item['active'] == "true" ? 'active' : 'inactive' }}">
-                                <td class="py-2 px-4 border-b">{{ $item['caption'] }}</td>
+                                <td class="py-2 px-4 border-b">{{ $item['orgName'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $item['description'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $item['gatheredAmount'] }}</td>
                                 <td class="py-2 px-4 border-b text-center">{{ $item['targetAmount'] }}</td>
@@ -41,10 +41,8 @@
                                         <form method="POST" action="{{ url('/api/donations/close/' . $item['id']) }}">
                                             @csrf
                                             {{ method_field("PUT") }}
-                                            <button class="bg-red-500 text-white px-2 py-1 rounded-md">Close</button>
                                         </form>
                                     @else
-                                        <button class="bg-red-200 text-white px-2 py-1 rounded-md" disabled>Close</button>
                                     @endif
                                 </td>
                             </tr>
